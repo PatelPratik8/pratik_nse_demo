@@ -1,8 +1,22 @@
 // Import the express module
 const express = require('express');
+const {getData} = require('./nse')
 
 // Create an Express application
 const app = express();
+
+
+app.get('/getData', async (req, res) => {
+  try {
+    let data = await getData();
+    console.log("get data0",data);
+    
+   return res.send(data)
+  } catch (error) {
+    res.send(error)
+  }
+
+});
 
 // Set a simple route for the home page
 app.get('/', (req, res) => {

@@ -3,6 +3,8 @@ const { Builder, By } = require('selenium-webdriver');
 async function getData() {
   let driver = await new Builder().forBrowser('chrome').build();
 
+  let a = []
+
   try {
     await driver.get('https://www.nseindia.com/');
     await driver.sleep(1000);
@@ -12,20 +14,21 @@ async function getData() {
     // Wait a few seconds for the page to load
     // await driver.sleep(1000);
 
-    const jsonText = await driver.findElement({ css: 'pre' }).getText();
+    const jsonText = await driver.findElement(By.css('body')).getText();
+
     const data = JSON.parse(jsonText);
     // console.log('Data from page:', data);
-
-    let a = []
 
     if(data.records.data){
         data.records.data.forEach(element => {
             if(element.strikePrice === 1200){
-                // console.log(element);
-                a.push[element]
+                // console.log(element);y
+                a.push(element)
             }
         });
     }
+    console.log(a.length);
+    
     return a
     // console.log()
     // Get all cookies
@@ -41,7 +44,8 @@ async function getData() {
     throw err
   } finally {
     await driver.quit();
+    return a
   }
 };
-
+// getData()
 module.exports = { getData }
